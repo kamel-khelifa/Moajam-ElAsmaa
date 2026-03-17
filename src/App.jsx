@@ -271,24 +271,24 @@ const NameCard = ({ data, onClick, viewMode }) => {
     return (
       <div
         onClick={() => onClick(data)}
-        className="group flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 bg-white rounded-2xl p-4 sm:p-5 cursor-pointer border border-stone-100 shadow-sm hover:shadow-xl hover:border-amber-200/50 transition-all duration-300 transform hover:-translate-y-1 w-full"
+        className="group flex flex-row items-center gap-4 sm:gap-6 bg-white rounded-2xl p-4 sm:p-5 cursor-pointer border border-stone-100 shadow-sm hover:shadow-xl hover:border-amber-200/50 transition-all duration-300 transform hover:-translate-y-1 w-full"
       >
-        <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-stone-50 to-stone-100 border border-stone-200 flex items-center justify-center relative overflow-hidden group-hover:border-amber-200 transition-colors">
-          <span className="absolute -bottom-2 -left-2 text-5xl font-name text-stone-200/50 select-none z-0">{data.name}</span>
-          <span className="relative z-10 text-2xl font-name text-stone-800 group-hover:text-amber-700 transition-colors">{data.name.charAt(0)}</span>
+        <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-stone-50 to-stone-100 border border-stone-200 flex items-center justify-center relative overflow-hidden group-hover:border-amber-200 transition-colors">
+          <span className="absolute -bottom-1 -left-1 sm:-bottom-2 sm:-left-2 text-4xl sm:text-5xl font-name text-stone-200/50 select-none z-0">{data.name}</span>
+          <span className="relative z-10 text-xl sm:text-2xl font-name text-stone-800 group-hover:text-amber-700 transition-colors">{data.name.charAt(0)}</span>
         </div>
         
         <div className="flex-1 flex flex-col min-w-0 w-full">
-          <div className="flex flex-wrap items-center gap-3 mb-2">
-            <h3 className="text-2xl font-name text-stone-900 group-hover:text-amber-700 transition-colors truncate">{data.name}</h3>
-            <span className={`text-[10px] font-bold px-2 py-1 rounded-sm shadow-sm ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600' : data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+            <h3 className="text-lg sm:text-2xl font-name text-stone-900 group-hover:text-amber-700 transition-colors line-clamp-1">{data.name}</h3>
+            <span className={`text-[10px] font-bold px-2 py-0.5 sm:py-1 rounded-sm shadow-sm ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600' : data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
               {data.gender || 'غير محدد'}
             </span>
           </div>
-          <p className="text-sm text-stone-500 line-clamp-1 sm:line-clamp-2 leading-relaxed font-serif">{removeReferences(data.meaning)}</p>
+          <p className="text-xs sm:text-sm text-stone-500 line-clamp-2 leading-relaxed font-serif">{removeReferences(data.meaning)}</p>
         </div>
 
-        <div className="flex-shrink-0 self-end sm:self-center flex items-center text-xs font-bold text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-amber-50 px-3 py-2 rounded-lg">
+        <div className="hidden sm:flex flex-shrink-0 items-center text-xs font-bold text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-amber-50 px-3 py-2 rounded-lg">
           <Feather className="w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0" /> التفاصيل
         </div>
       </div>
@@ -299,25 +299,25 @@ const NameCard = ({ data, onClick, viewMode }) => {
     return (
       <div
         onClick={() => onClick(data)}
-        className="group relative bg-white rounded-2xl p-4 sm:p-5 cursor-pointer overflow-hidden border border-stone-100 shadow-sm hover:shadow-xl hover:border-amber-200/60 transition-all duration-300 ease-out transform hover:-translate-y-1 flex flex-col items-center text-center h-full"
+        className="group relative bg-white rounded-2xl p-4 sm:p-5 cursor-pointer overflow-hidden border border-stone-100 shadow-sm hover:shadow-xl hover:border-amber-200/60 transition-all duration-300 ease-out transform hover:-translate-y-1 flex flex-col items-center text-center h-full min-h-[140px]"
       >
-        <div className="absolute -bottom-2 -left-2 text-6xl font-name text-stone-50 group-hover:text-amber-50/60 transition-colors duration-500 select-none z-0 whitespace-nowrap opacity-70 pointer-events-none">
+        <div className="absolute -bottom-2 -left-2 text-5xl sm:text-6xl font-name text-stone-50 group-hover:text-amber-50/60 transition-colors duration-500 select-none z-0 whitespace-nowrap opacity-70 pointer-events-none">
           {data.name}
         </div>
 
         <div className="relative z-10 flex flex-col items-center h-full w-full pointer-events-none">
-          <span className={`text-[10px] font-bold px-2.5 py-1 mb-3 rounded-md pointer-events-auto shadow-sm
+          <span className={`text-[10px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 mb-2 sm:mb-3 rounded-md pointer-events-auto shadow-sm
             ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600 border border-rose-100' :
               data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600 border border-blue-100' :
               'bg-emerald-50 text-emerald-600 border border-emerald-100'}`}>
             {data.gender || 'غير محدد'}
           </span>
           
-          <h3 className="text-2xl sm:text-3xl font-name text-stone-900 mb-2 group-hover:text-amber-700 transition-colors drop-shadow-sm">
+          <h3 className="text-xl sm:text-3xl font-name text-stone-900 mb-2 group-hover:text-amber-700 transition-colors drop-shadow-sm line-clamp-1">
             {data.name}
           </h3>
           
-          <p className="text-xs text-stone-500 line-clamp-2 mt-auto leading-relaxed font-serif w-full">
+          <p className="text-[11px] sm:text-xs text-stone-500 line-clamp-2 mt-auto leading-relaxed font-serif w-full pb-1">
             {removeReferences(data.meaning)}
           </p>
         </div>
@@ -329,35 +329,35 @@ const NameCard = ({ data, onClick, viewMode }) => {
   return (
     <div
       onClick={() => onClick(data)}
-      className="group relative bg-white rounded-3xl p-6 sm:p-8 cursor-pointer overflow-hidden border border-stone-100 shadow-sm hover:shadow-2xl hover:border-amber-200/60 transition-all duration-500 ease-out transform hover:-translate-y-1.5"
+      className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 cursor-pointer overflow-hidden border border-stone-100 shadow-sm hover:shadow-2xl hover:border-amber-200/60 transition-all duration-500 ease-out transform hover:-translate-y-1.5 min-h-[160px] sm:min-h-[200px]"
     >
-      <div className="absolute -bottom-4 -left-4 text-8xl font-name text-stone-50 group-hover:text-amber-50/60 transition-colors duration-500 select-none z-0 whitespace-nowrap opacity-70 pointer-events-none">
+      <div className="absolute -bottom-2 -left-2 sm:-bottom-4 sm:-left-4 text-6xl sm:text-8xl font-name text-stone-50 group-hover:text-amber-50/60 transition-colors duration-500 select-none z-0 whitespace-nowrap opacity-70 pointer-events-none">
         {data.name}
       </div>
 
       <div className="relative z-10 flex flex-col h-full pointer-events-none">
-        <div className="flex justify-between items-start mb-8">
-          <span className={`text-xs font-bold px-3 py-1.5 rounded-md pointer-events-auto shadow-sm
+        <div className="flex justify-between items-start mb-4 sm:mb-8">
+          <span className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-md pointer-events-auto shadow-sm
             ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600 border border-rose-100' :
               data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600 border border-blue-100' :
               'bg-emerald-50 text-emerald-600 border border-emerald-100'}`}>
             {data.gender || 'غير محدد'}
           </span>
           {data.tags && data.tags.length > 0 && (
-            <span className="text-[10px] font-bold px-2 py-1.5 text-stone-500 bg-stone-100 border border-stone-200 rounded-md shadow-sm">
+            <span className="text-[9px] sm:text-[10px] font-bold px-2 py-1 sm:py-1.5 text-stone-500 bg-stone-100 border border-stone-200 rounded-md shadow-sm">
               {data.tags[0]}
             </span>
           )}
         </div>
         
-        <h3 className="text-4xl font-name text-stone-900 mb-4 group-hover:text-amber-700 transition-colors drop-shadow-sm">
+        <h3 className="text-2xl sm:text-4xl font-name text-stone-900 mb-2 sm:mb-4 group-hover:text-amber-700 transition-colors drop-shadow-sm line-clamp-1">
           {data.name}
         </h3>
-        <p className="text-sm text-stone-500 line-clamp-3 mt-auto leading-relaxed font-serif">
+        <p className="text-xs sm:text-sm text-stone-500 line-clamp-3 mt-auto leading-relaxed font-serif pb-1">
           {removeReferences(data.meaning)}
         </p>
 
-        <div className="mt-8 flex items-center text-xs font-bold text-amber-600 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+        <div className="hidden sm:flex mt-6 sm:mt-8 items-center text-xs font-bold text-amber-600 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
           <Feather className="w-4 h-4 ml-2" /> اكتشف المزيد عن الاسم
         </div>
       </div>
@@ -483,15 +483,15 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <main className="pt-36 pb-20 px-6 max-w-7xl mx-auto">
+      <main className="pt-36 pb-20 px-4 sm:px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-6">
-          <h1 className="text-6xl md:text-8xl font-title leading-[1.3] pb-2 drop-shadow-sm">
+          <h1 className="text-5xl sm:text-6xl md:text-8xl font-title leading-[1.3] pb-2 drop-shadow-sm">
             <span className="text-stone-900">معجم الأسماء</span> <br/>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-700 via-amber-600 to-amber-500">
               والكنى العربية
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-stone-500 font-light leading-relaxed max-w-2xl mx-auto font-sans">
+          <p className="text-base sm:text-lg md:text-xl text-stone-500 font-light leading-relaxed max-w-2xl mx-auto font-sans">
             دليلك الشامل لمعاني الأسماء العربية الأصيلة. استلهم من أسماء الأنبياء عليهم السلام و صحابة رسول الله ﷺ و شخصيات تاريخية عظيمة.
           </p>
         </div>
@@ -503,25 +503,25 @@ export default function App() {
             <Search className="w-5 h-5 text-stone-400" />
             <input
               type="text"
-              placeholder="ابحث بالاسم، المعنى، أو التصنيف (مثل: صحابة)..."
+              placeholder="ابحث بالاسم، المعنى..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-transparent border-none py-4 px-4 text-stone-800 placeholder-stone-400 focus:outline-none font-sans font-medium"
+              className="w-full bg-transparent border-none py-3 sm:py-4 px-3 sm:px-4 text-stone-800 placeholder-stone-400 focus:outline-none font-sans font-medium text-sm sm:text-base"
             />
             {searchTerm && (
-              <button onClick={() => setSearchTerm('')} className="text-stone-400 hover:text-stone-600 transition-colors bg-stone-200 p-1 rounded-full">
+              <button onClick={() => setSearchTerm('')} className="text-stone-400 hover:text-stone-600 transition-colors bg-stone-200 p-1 rounded-full shrink-0">
                 <X className="w-4 h-4" />
               </button>
             )}
           </div>
 
-          <div className="w-full lg:w-auto flex flex-col sm:flex-row items-center gap-3 px-2">
+          <div className="w-full lg:w-auto flex flex-col sm:flex-row items-center gap-3 px-1 sm:px-2">
             <div className="flex bg-stone-100 p-1 rounded-xl w-full sm:w-auto">
               {['الكل', 'إناث', 'ذكور'].map(gender => (
                 <button
                   key={gender}
                   onClick={() => setGenderFilter(gender)}
-                  className={`flex-1 sm:flex-none px-6 py-3 rounded-lg text-sm font-bold transition-all ${
+                  className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-sm font-bold transition-all ${
                     genderFilter === gender
                       ? 'bg-white text-amber-700 shadow-sm border border-stone-200/50'
                       : 'text-stone-500 hover:text-stone-900'
@@ -532,25 +532,25 @@ export default function App() {
               ))}
             </div>
 
-            {/* View Mode Toggle */}
-            <div className="hidden sm:flex items-center bg-stone-100 p-1 rounded-xl border border-stone-200/50">
+            {/* View Mode Toggle - Now visible on mobile */}
+            <div className="flex w-full sm:w-auto justify-center items-center bg-stone-100 p-1 rounded-xl border border-stone-200/50">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2.5 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-white text-amber-600 shadow-sm' : 'text-stone-400 hover:text-stone-700'}`}
+                className={`p-2 sm:p-2.5 rounded-lg transition-all flex-1 sm:flex-none flex justify-center ${viewMode === 'grid' ? 'bg-white text-amber-600 shadow-sm' : 'text-stone-400 hover:text-stone-700'}`}
                 title="عرض شبكي كبير"
               >
                 <LayoutGrid className="w-5 h-5" />
               </button>
               <button
                 onClick={() => setViewMode('compact')}
-                className={`p-2.5 rounded-lg transition-all ${viewMode === 'compact' ? 'bg-white text-amber-600 shadow-sm' : 'text-stone-400 hover:text-stone-700'}`}
+                className={`p-2 sm:p-2.5 rounded-lg transition-all flex-1 sm:flex-none flex justify-center ${viewMode === 'compact' ? 'bg-white text-amber-600 shadow-sm' : 'text-stone-400 hover:text-stone-700'}`}
                 title="عرض شبكي مصغر"
               >
                 <Grid className="w-5 h-5" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-2.5 rounded-lg transition-all ${viewMode === 'list' ? 'bg-white text-amber-600 shadow-sm' : 'text-stone-400 hover:text-stone-700'}`}
+                className={`p-2 sm:p-2.5 rounded-lg transition-all flex-1 sm:flex-none flex justify-center ${viewMode === 'list' ? 'bg-white text-amber-600 shadow-sm' : 'text-stone-400 hover:text-stone-700'}`}
                 title="عرض قائمة"
               >
                 <List className="w-5 h-5" />
@@ -565,7 +565,7 @@ export default function App() {
             
             <button
               onClick={() => setSelectedLetter('الكل')}
-              className={`shrink-0 h-10 px-4 rounded-xl flex items-center justify-center transition-all shadow-sm font-sans text-sm font-bold ${
+              className={`shrink-0 h-9 sm:h-10 px-3 sm:px-4 rounded-xl flex items-center justify-center transition-all shadow-sm font-sans text-xs sm:text-sm font-bold ${
                 selectedLetter === 'الكل'
                   ? 'bg-amber-600 text-white shadow-amber-900/20 border-transparent'
                   : 'bg-white text-stone-600 border border-stone-200 hover:border-amber-300 hover:bg-amber-50 hover:text-amber-800'
@@ -580,7 +580,7 @@ export default function App() {
               <button
                 key={letter}
                 onClick={() => setSelectedLetter(letter)}
-                className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all shadow-sm font-name text-xl pt-1 ${
+                className={`shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-all shadow-sm font-name text-lg sm:text-xl pt-1 ${
                   selectedLetter === letter
                     ? 'bg-amber-600 text-white shadow-amber-900/20 border-transparent'
                     : 'bg-white text-stone-600 border border-stone-200 hover:border-amber-300 hover:bg-amber-50 hover:text-amber-800'
@@ -594,11 +594,11 @@ export default function App() {
         </div>
 
         {/* Results Info */}
-        <div className="max-w-7xl mx-auto mt-12 mb-6 flex justify-between items-end border-b border-stone-200/60 pb-4">
-          <h2 className="text-2xl font-title text-stone-800">
+        <div className="max-w-7xl mx-auto mt-8 sm:mt-12 mb-6 flex justify-between items-end border-b border-stone-200/60 pb-4">
+          <h2 className="text-xl sm:text-2xl font-title text-stone-800">
             {searchTerm ? 'نتائج البحث' : 'معجم الأسماء'}
           </h2>
-          <span className="text-sm font-bold text-stone-500 bg-stone-100 px-4 py-1.5 rounded-full shadow-inner border border-stone-200/50">
+          <span className="text-xs sm:text-sm font-bold text-stone-500 bg-stone-100 px-3 sm:px-4 py-1.5 rounded-full shadow-inner border border-stone-200/50">
             {loading ? '...' : filteredNames.length} {filteredNames.length === 1 ? 'اسم' : 'أسماء'}
           </span>
         </div>
@@ -611,9 +611,9 @@ export default function App() {
           </div>
         ) : filteredNames.length > 0 ? (
           <div className={
-            viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" :
+            viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6" :
             viewMode === 'compact' ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 max-w-7xl mx-auto" :
-            "flex flex-col gap-4 max-w-5xl mx-auto"
+            "flex flex-col gap-3 sm:gap-4 max-w-5xl mx-auto"
           }>
             {filteredNames.map(name => (
               <NameCard
@@ -625,15 +625,15 @@ export default function App() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-32 bg-white rounded-3xl border border-dashed border-stone-300 mt-8 max-w-3xl mx-auto">
-            <div className="w-20 h-20 bg-stone-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-stone-100 shadow-sm">
-              <Search className="w-8 h-8 text-stone-400" />
+          <div className="text-center py-20 sm:py-32 bg-white rounded-3xl border border-dashed border-stone-300 mt-8 max-w-3xl mx-auto px-4">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-stone-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-stone-100 shadow-sm">
+              <Search className="w-6 h-6 sm:w-8 sm:h-8 text-stone-400" />
             </div>
-            <h3 className="text-3xl font-title text-stone-900 mb-3">لم يتم العثور على أسماء</h3>
-            <p className="text-stone-500 font-sans">حاول تعديل كلمات البحث أو تغيير تصنيف الجنس.</p>
+            <h3 className="text-2xl sm:text-3xl font-title text-stone-900 mb-3">لم يتم العثور على أسماء</h3>
+            <p className="text-sm sm:text-base text-stone-500 font-sans">حاول تعديل كلمات البحث أو تغيير تصنيف الجنس.</p>
             <button
               onClick={() => {setSearchTerm(''); setGenderFilter('الكل');}}
-              className="mt-8 px-8 py-3 bg-stone-900 text-white rounded-full text-sm font-bold tracking-wide hover:bg-amber-700 shadow-lg shadow-amber-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+              className="mt-8 px-6 sm:px-8 py-3 bg-stone-900 text-white rounded-full text-xs sm:text-sm font-bold tracking-wide hover:bg-amber-700 shadow-lg shadow-amber-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
             >
               مسح فلاتر البحث
             </button>
@@ -643,14 +643,14 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-stone-200 bg-white py-12 mt-20">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-stone-500 font-sans font-medium">
+      <footer className="border-t border-stone-200 bg-white py-12 mt-10 sm:mt-20">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-stone-500 font-sans font-medium gap-4">
           <div className="flex items-center space-x-2 space-x-reverse mb-4 md:mb-0">
             <Sparkles className="w-4 h-4 text-amber-500" />
             <span className="font-title font-bold text-stone-900 text-lg">معجم الأسماء</span>
             <span>&copy; {new Date().getFullYear()}</span>
           </div>
-          <div className="flex space-x-6 space-x-reverse">
+          <div className="flex flex-wrap justify-center gap-4 sm:space-x-6 sm:space-x-reverse">
             <button onClick={() => setActiveStaticPage(staticPagesContent.privacy)} className="hover:text-amber-700 transition-colors">سياسة الخصوصية</button>
             <button onClick={() => setActiveStaticPage(staticPagesContent.terms)} className="hover:text-amber-700 transition-colors">شروط الاستخدام</button>
             <button onClick={() => setActiveStaticPage(staticPagesContent.contribute)} className="hover:text-amber-700 transition-colors">المساهمة في المعجم</button>
