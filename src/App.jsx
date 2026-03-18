@@ -170,7 +170,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
               <BookOpen className="w-4 h-4 ml-2" /> المعنى والمغزى
             </h3>
             <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
-              <FormattedText text={nameData.definition} />
+              <FormattedText text={nameData.description || nameData.definition || nameData.meaning} />
             </p>
           </section>
 
@@ -261,21 +261,30 @@ const NameCard = ({ data, onClick, viewMode }) => {
     return (
       <div
         onClick={() => onClick(data)}
-        className="group flex flex-row items-center gap-3 sm:gap-5 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 cursor-pointer border border-stone-100 shadow-sm hover:shadow-xl hover:border-amber-200/50 transition-all duration-300 transform hover:-translate-y-0.5 sm:hover:-translate-y-1 w-full"
+        className="group flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 cursor-pointer border border-stone-100 shadow-sm hover:shadow-xl hover:border-amber-200/50 transition-all duration-300 transform hover:-translate-y-0.5 sm:hover:-translate-y-1 w-full"
       >
-        <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-stone-50 to-stone-100 border border-stone-200 flex items-center justify-center relative overflow-hidden group-hover:border-amber-200 transition-colors">
-          <span className="absolute -bottom-1 -left-1 text-3xl sm:text-5xl font-bold font-sans text-stone-200/50 select-none z-0">{data.name}</span>
-          <span className="relative z-10 text-lg sm:text-2xl font-bold font-sans text-stone-800 group-hover:text-amber-700 transition-colors">{data.name.charAt(0)}</span>
-        </div>
-        
-        <div className="flex-1 flex flex-col min-w-0 w-full py-1">
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
-            <h3 className="text-sm sm:text-lg md:text-xl font-bold font-sans text-stone-900 group-hover:text-amber-700 transition-colors break-words">{data.name}</h3>
-            <span className={`text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-sm shadow-sm ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600' : data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-stone-50 to-stone-100 border border-stone-200 flex items-center justify-center relative overflow-hidden group-hover:border-amber-200 transition-colors">
+            <span className="absolute -bottom-1 -left-1 text-3xl sm:text-5xl font-bold font-sans text-stone-200/50 select-none z-0">{data.name}</span>
+            <span className="relative z-10 text-lg sm:text-2xl font-bold font-sans text-stone-800 group-hover:text-amber-700 transition-colors">{data.name.charAt(0)}</span>
+          </div>
+          
+          <div className="flex-1 sm:hidden flex flex-wrap items-center gap-2">
+            <h3 className="text-base font-bold font-sans text-stone-900 group-hover:text-amber-700 transition-colors break-words">{data.name}</h3>
+            <span className={`text-[10px] font-bold px-2 py-1 rounded-sm shadow-sm ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600' : data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
               {data.gender || 'غير محدد'}
             </span>
           </div>
-          <p className="text-[10px] sm:text-xs text-stone-500 line-clamp-2 leading-relaxed font-serif">
+        </div>
+        
+        <div className="flex-1 flex flex-col min-w-0 w-full py-1">
+          <div className="hidden sm:flex flex-wrap items-center gap-3 mb-2">
+            <h3 className="text-lg md:text-xl font-bold font-sans text-stone-900 group-hover:text-amber-700 transition-colors break-words">{data.name}</h3>
+            <span className={`text-[10px] font-bold px-2 py-1 rounded-sm shadow-sm ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600' : data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
+              {data.gender || 'غير محدد'}
+            </span>
+          </div>
+          <p className="text-xs sm:text-sm text-stone-600 line-clamp-none sm:line-clamp-2 leading-relaxed font-serif">
             {removeReferences(data.meaning)}
           </p>
         </div>
@@ -356,11 +365,11 @@ const NameCard = ({ data, onClick, viewMode }) => {
         </div>
         
         <div className="w-full mt-2 sm:mt-3">
-          <p className="text-[10px] sm:text-[11px] md:text-xs text-stone-500 line-clamp-3 leading-relaxed font-serif">
+          <p className="text-[11px] sm:text-[11px] md:text-xs text-stone-600 line-clamp-none sm:line-clamp-3 leading-relaxed font-serif">
             {removeReferences(data.meaning)}
           </p>
 
-          <div className="mt-3 sm:mt-4 flex items-center text-[9px] sm:text-[10px] font-bold text-amber-600 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-all duration-300 transform sm:translate-y-2 group-hover:translate-y-0">
+          <div className="mt-3 sm:mt-4 flex items-center text-[10px] font-bold text-amber-600 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-all duration-300 transform sm:translate-y-2 group-hover:translate-y-0">
             <Feather className="w-3 h-3 sm:w-3.5 sm:h-3.5 ml-1 sm:ml-1.5" /> اكتشف المزيد
           </div>
         </div>
