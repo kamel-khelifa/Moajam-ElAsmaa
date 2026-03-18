@@ -4,14 +4,6 @@ import { Search, X, Sparkles, Users, BookOpen, Feather, SlidersHorizontal, Star,
 // --- GOOGLE APPS SCRIPT INTEGRATION ---
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS4Ze823Sw7FMduPkhvPbv-ckQEPPWHiG6lcL3eHxF8rExpWNZyHZ6_8bNcOflM4pvIQ/exec';
 
-// --- FALLBACK MOCK DATA ---
-const mockDatabase = [
-  { id: '1', name: 'أَبُو بَكْر', gender: 'ذكر', genderFilter: 'ذكور', meaning: 'المبادر، أو البكر من الإبل.', description: 'اسم مركب يعبر عن السبق والمبادرة للخير، وهو كنية لأول الخلفاء الراشدين. (المصدر: السيرة النبوية)', famousPeople: ['أبو بكر الصديق'], earliestAppearance: 'شبه الجزيرة العربية', tags: ['صحابة', 'قيادي'], referenceUrl: 'https://ar.wikipedia.org/wiki/%D8%A3%D8%A8%D9%88_%D8%A8%D9%83%D8%B1_%D8%A7%D9%84%D8%B5%D8%AF%D9%8A%D9%82' },
-  { id: '2', name: 'خَدِيجَة', gender: 'أنثى', genderFilter: 'إناث', meaning: 'المولودة قبل تمام أشهر الحمل وتعيش.', description: 'اسم أيقوني في التاريخ، يرمز للدعم، الحكمة، والوفاء المطلق. [كتاب التراجم]', famousPeople: ['خديجة بنت خويلد'], earliestAppearance: 'شبه الجزيرة العربية', tags: ['صحابة', 'أيقوني'], referenceUrl: '' },
-  { id: '3', name: 'يُوسُف', gender: 'ذكر', genderFilter: 'ذكور', meaning: 'الله يزيد، ويضاعف.', description: 'اسم نبي عُرف بالجمال الفائق والحكمة وتأويل الرؤى.', famousPeople: ['النبي يوسف عليه السلام'], earliestAppearance: 'تاريخ قديم', tags: ['أنبياء', 'جمال'], referenceUrl: '' },
-  { id: '4', name: 'لَيَان', gender: 'أنثى', genderFilter: 'إناث', meaning: 'الرقة، اللطافة، والنعومة.', description: 'اسم عربي جميل ورقيق، منتشر بكثرة في العصر الحديث.', famousPeople: [], earliestAppearance: 'معاصر', tags: ['معاصر', 'رقيق'], referenceUrl: '' }
-];
-
 // --- EMAIL CONTACT COMPONENT ---
 const EmailContact = () => {
   return (
@@ -178,9 +170,23 @@ const NameDetailModal = ({ nameData, onClose }) => {
               <BookOpen className="w-4 h-4 ml-2" /> المعنى والمغزى
             </h3>
             <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
-              <FormattedText text={nameData.description || nameData.meaning} />
+              <FormattedText text={nameData.definition} />
             </p>
           </section>
+
+          {nameData.earliestAppearance && (
+            <>
+              <div className="w-full h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
+              <section>
+                <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
+                  <Feather className="w-4 h-4 ml-2" /> أول ظهور
+                </h3>
+                <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
+                  {nameData.earliestAppearance}
+                </p>
+              </section>
+            </>
+          )}
 
           <div className="w-full h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
 
@@ -268,8 +274,15 @@ const NameCard = ({ data, onClick, viewMode }) => {
             <span className={`text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-sm shadow-sm ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600' : data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
               {data.gender || 'غير محدد'}
             </span>
+            {data.earliestAppearance && (
+              <span className="text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-sm shadow-sm bg-amber-50 text-amber-600 border border-amber-100">
+                {data.earliestAppearance}
+              </span>
+            )}
           </div>
-          <p className="text-xs sm:text-sm text-stone-500 line-clamp-2 leading-relaxed font-serif">{removeReferences(data.meaning)}</p>
+          <p className="text-xs sm:text-sm text-stone-500 line-clamp-2 leading-relaxed font-serif">
+            {removeReferences(data.meaning)}
+          </p>
         </div>
 
         <div className="flex-shrink-0 hidden sm:flex items-center text-xs font-bold text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-amber-50 px-3 py-2 rounded-lg">
@@ -322,12 +335,19 @@ const NameCard = ({ data, onClick, viewMode }) => {
 
       <div className="relative z-10 flex flex-col h-full pointer-events-none">
         <div className="flex justify-between items-start mb-4 sm:mb-6">
-          <span className={`text-[10px] sm:text-xs font-bold px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md pointer-events-auto shadow-sm
-            ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600 border border-rose-100' :
-              data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600 border border-blue-100' :
-              'bg-emerald-50 text-emerald-600 border border-emerald-100'}`}>
-            {data.gender || 'غير محدد'}
-          </span>
+          <div className="flex gap-2">
+            <span className={`text-[10px] sm:text-xs font-bold px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md pointer-events-auto shadow-sm
+              ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600 border border-rose-100' :
+                data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600 border border-blue-100' :
+                'bg-emerald-50 text-emerald-600 border border-emerald-100'}`}>
+              {data.gender || 'غير محدد'}
+            </span>
+            {data.earliestAppearance && (
+              <span className="text-[10px] sm:text-xs font-bold px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md pointer-events-auto shadow-sm bg-amber-50 text-amber-700 border border-amber-100">
+                {data.earliestAppearance}
+              </span>
+            )}
+          </div>
           {data.tags && data.tags.length > 0 && (
             <span className="text-[9px] sm:text-[10px] font-bold px-2 py-1 sm:py-1.5 text-stone-500 bg-stone-100 border border-stone-200 rounded-md shadow-sm">
               {data.tags[0]}
@@ -378,7 +398,6 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
-        setNames(mockDatabase);
         setLoading(false);
         return;
       }
@@ -396,7 +415,6 @@ export default function App() {
         localStorage.setItem('arabic_names_cache_v2', JSON.stringify(data));
       } catch (error) {
         console.error('Error fetching from Apps Script:', error);
-        if (!cachedData) setNames(mockDatabase);
       } finally {
         setLoading(false);
       }
