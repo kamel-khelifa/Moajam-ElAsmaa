@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, X, Sparkles, Users, BookOpen, Feather, SlidersHorizontal, Star, Loader2, ExternalLink, LayoutGrid, List, Grid } from 'lucide-react';
+import { Search, X, Sparkles, Users, BookOpen, Feather, SlidersHorizontal, Star, Loader2, ExternalLink, LayoutGrid, List, Grid, FileText } from 'lucide-react';
 
 // --- GOOGLE APPS SCRIPT INTEGRATION ---
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS4Ze823Sw7FMduPkhvPbv-ckQEPPWHiG6lcL3eHxF8rExpWNZyHZ6_8bNcOflM4pvIQ/exec';
@@ -158,7 +158,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
             </p>
           </div>
           <div className="relative z-10 mt-12 md:mt-0 opacity-[0.03] pointer-events-none">
-            <div className="text-[8rem] sm:text-[10rem] md:text-[14rem] leading-none font-sans font-bold text-white absolute -bottom-16 -left-12 select-none whitespace-nowrap">
+            <div className="text-[6rem] sm:text-[8rem] md:text-[10rem] leading-none font-sans font-bold text-white absolute -bottom-16 -left-12 select-none whitespace-nowrap">
               {nameData.name}
             </div>
           </div>
@@ -167,7 +167,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
         <div className="md:w-3/5 p-6 sm:p-8 md:p-12 space-y-6 sm:space-y-8 bg-white/60 backdrop-blur-xl">
           <section>
             <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
-              <BookOpen className="w-4 h-4 ml-2" /> المعنى والمغزى
+              <BookOpen className="w-4 h-4 ml-2" /> تعريف الاسم
             </h3>
             
             <div className="flex flex-col gap-3">
@@ -177,13 +177,28 @@ const NameDetailModal = ({ nameData, onClose }) => {
                 </p>
               )}
               
-              {(nameData.description || nameData.definition) && (
+              {nameData.definition && (
                 <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
-                  <FormattedText text={nameData.description || nameData.definition} />
+                  <FormattedText text={nameData.definition} />
                 </p>
               )}
             </div>
           </section>
+
+          {(nameData.description || nameData.definition) && (
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
+          )}
+
+          {nameData.description && (
+            <section>
+              <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
+                <FileText className="w-4 h-4 ml-2" /> التحليل والدلالة
+              </h3>
+              <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
+                <FormattedText text={nameData.description} />
+              </p>
+            </section>
+          )}
 
           {nameData.earliestAppearance && (
             <>
@@ -487,8 +502,11 @@ export default function App() {
 
   useEffect(() => {
     setVisibleCount(24);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [searchTerm, genderFilter, selectedLetter]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [searchTerm]);
 
   const displayedNames = filteredNames.slice(0, visibleCount);
 
