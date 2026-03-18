@@ -158,46 +158,49 @@ const NameDetailModal = ({ nameData, onClose }) => {
             </p>
           </div>
           <div className="relative z-10 mt-12 md:mt-0 opacity-[0.03] pointer-events-none">
-            <div className="text-[6rem] sm:text-[8rem] md:text-[10rem] leading-none font-sans font-bold text-white absolute -bottom-16 -left-12 select-none whitespace-nowrap">
+            <div className="text-[4rem] sm:text-[6rem] md:text-[8rem] leading-none font-sans font-bold text-white absolute -bottom-16 -left-8 select-none whitespace-nowrap truncate max-w-[150%]">
               {nameData.name}
             </div>
           </div>
         </div>
 
         <div className="md:w-3/5 p-6 sm:p-8 md:p-12 space-y-6 sm:space-y-8 bg-white/60 backdrop-blur-xl">
-          <section>
-            <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
-              <BookOpen className="w-4 h-4 ml-2" /> تعريف الاسم
-            </h3>
-            
-            <div className="flex flex-col gap-3">
-              {nameData.meaning && (
-                <p className="block md:hidden text-lg sm:text-xl text-stone-900 font-bold leading-relaxed font-serif">
-                  <FormattedText text={nameData.meaning} />
-                </p>
-              )}
+          {(nameData.meaning || nameData.definition) && (
+            <section>
+              <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
+                <BookOpen className="w-4 h-4 ml-2" /> المعنى
+              </h3>
               
-              {nameData.definition && (
-                <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
-                  <FormattedText text={nameData.definition} />
-                </p>
-              )}
-            </div>
-          </section>
-
-          {(nameData.description || nameData.definition) && (
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
+              <div className="flex flex-col gap-3">
+                {nameData.meaning && (
+                  <p className="block md:hidden text-lg sm:text-xl text-stone-900 font-bold leading-relaxed font-serif">
+                    <FormattedText text={nameData.meaning} />
+                  </p>
+                )}
+                
+                {nameData.definition && (
+                  <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
+                    <FormattedText text={nameData.definition} />
+                  </p>
+                )}
+              </div>
+            </section>
           )}
 
           {nameData.description && (
-            <section>
-              <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
-                <FileText className="w-4 h-4 ml-2" /> التحليل والدلالة
-              </h3>
-              <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
-                <FormattedText text={nameData.description} />
-              </p>
-            </section>
+            <>
+              {(nameData.meaning || nameData.definition) && (
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
+              )}
+              <section>
+                <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
+                  <FileText className="w-4 h-4 ml-2" /> الوصف والمغزى
+                </h3>
+                <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
+                  <FormattedText text={nameData.description} />
+                </p>
+              </section>
+            </>
           )}
 
           {nameData.earliestAppearance && (
