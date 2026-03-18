@@ -153,7 +153,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
               {nameData.gender}
             </span>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-sans font-bold mb-4 sm:mb-6 text-amber-50 leading-tight drop-shadow-lg">{nameData.name}</h2>
-            <p className="text-lg sm:text-xl text-stone-300 font-serif leading-relaxed">
+            <p className="hidden md:block text-lg sm:text-xl text-stone-300 font-serif leading-relaxed">
               <FormattedText text={nameData.meaning} />
             </p>
           </div>
@@ -169,9 +169,20 @@ const NameDetailModal = ({ nameData, onClose }) => {
             <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
               <BookOpen className="w-4 h-4 ml-2" /> المعنى والمغزى
             </h3>
-            <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
-              <FormattedText text={nameData.description || nameData.definition || nameData.meaning} />
-            </p>
+            {nameData.meaning && (
+              <p className="md:hidden text-lg sm:text-xl text-stone-900 font-bold mb-3 leading-relaxed font-serif">
+                <FormattedText text={nameData.meaning} />
+              </p>
+            )}
+            {(nameData.description || nameData.definition) ? (
+              <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
+                <FormattedText text={nameData.description || nameData.definition} />
+              </p>
+            ) : (
+              <p className="hidden md:block text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
+                <FormattedText text={nameData.meaning} />
+              </p>
+            )}
           </section>
 
           {nameData.earliestAppearance && (
