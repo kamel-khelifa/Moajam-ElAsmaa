@@ -284,9 +284,18 @@ const NameCard = ({ data, onClick, viewMode }) => {
               {data.gender || 'غير محدد'}
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-stone-600 line-clamp-none sm:line-clamp-2 leading-relaxed font-serif">
-            {removeReferences(data.meaning)}
-          </p>
+          
+          {data.meaning && (
+            <p className="text-sm sm:text-base font-bold text-stone-800 mb-1 leading-relaxed font-serif">
+              {removeReferences(data.meaning)}
+            </p>
+          )}
+          
+          {(data.description || data.definition) && (
+            <p className="text-xs sm:text-sm text-stone-600 line-clamp-none sm:line-clamp-2 leading-relaxed font-serif">
+              {removeReferences(data.description || data.definition)}
+            </p>
+          )}
         </div>
 
         <div className="flex-shrink-0 hidden sm:flex items-center text-[10px] font-bold text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-amber-50 px-3 py-2 rounded-lg">
