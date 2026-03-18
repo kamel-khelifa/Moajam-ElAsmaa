@@ -164,14 +164,14 @@ const NameDetailModal = ({ nameData, onClose }) => {
           </div>
         </div>
 
-        <div className="md:w-3/5 p-6 sm:p-8 md:p-12 space-y-6 sm:space-y-8 bg-white/60 backdrop-blur-xl">
+        <div className="md:w-3/5 p-5 sm:p-6 md:p-8 space-y-4 sm:space-y-5 bg-white/60 backdrop-blur-xl">
           {(nameData.meaning || nameData.definition) && (
             <section>
-              <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
+              <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-2.5 sm:mb-3 uppercase">
                 <BookOpen className="w-4 h-4 ml-2" /> المعنى
               </h3>
               
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2.5">
                 {nameData.meaning && (
                   <p className="block md:hidden text-lg sm:text-xl text-stone-900 font-bold leading-relaxed font-serif">
                     <FormattedText text={nameData.meaning} />
@@ -193,7 +193,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
                 <div className="w-full h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
               )}
               <section>
-                <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
+                <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-2.5 sm:mb-3 uppercase">
                   <FileText className="w-4 h-4 ml-2" /> الوصف والمغزى
                 </h3>
                 <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
@@ -207,7 +207,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
             <>
               <div className="w-full h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
               <section>
-                <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
+                <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-2.5 sm:mb-3 uppercase">
                   <Feather className="w-4 h-4 ml-2" /> أول ظهور
                 </h3>
                 <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
@@ -222,7 +222,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
           {nameData.famousPeople && nameData.famousPeople.length > 0 && (
             <>
               <section>
-                <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
+                <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-2.5 sm:mb-3 uppercase">
                   <Users className="w-4 h-4 ml-2" /> شخصيات بارزة
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
@@ -241,7 +241,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
           {nameData.referenceUrl && (
             <>
               <section>
-                <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-3 sm:mb-4 uppercase">
+                <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-2.5 sm:mb-3 uppercase">
                   <ExternalLink className="w-4 h-4 ml-2" /> المصادر
                 </h3>
                 <a
