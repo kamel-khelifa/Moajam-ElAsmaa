@@ -315,9 +315,11 @@ const NameCard = ({ data, onClick, viewMode }) => {
             {data.name}
           </h3>
           
-          <p className="text-[10px] sm:text-xs text-stone-500 line-clamp-2 sm:line-clamp-3 mt-auto leading-relaxed font-serif w-full">
-            {removeReferences(data.meaning)}
-          </p>
+          <div className="mt-auto w-full">
+            <p className="text-[10px] sm:text-xs text-stone-500 line-clamp-2 sm:line-clamp-3 leading-relaxed font-serif w-full">
+              {removeReferences(data.meaning)}
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -359,12 +361,14 @@ const NameCard = ({ data, onClick, viewMode }) => {
           {data.name}
         </h3>
         
-        <p className="text-xs sm:text-sm text-stone-500 line-clamp-3 sm:line-clamp-4 mt-auto leading-relaxed font-serif">
-          {removeReferences(data.meaning)}
-        </p>
+        <div className="mt-auto w-full">
+          <p className="text-xs sm:text-sm text-stone-500 line-clamp-3 sm:line-clamp-4 leading-relaxed font-serif">
+            {removeReferences(data.meaning)}
+          </p>
 
-        <div className="mt-6 flex items-center text-[10px] sm:text-xs font-bold text-amber-600 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-all duration-300 transform sm:translate-y-2 group-hover:translate-y-0">
-          <Feather className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1.5 sm:ml-2" /> اكتشف المزيد
+          <div className="mt-4 sm:mt-6 flex items-center text-[10px] sm:text-xs font-bold text-amber-600 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-all duration-300 transform sm:translate-y-2 group-hover:translate-y-0">
+            <Feather className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1.5 sm:ml-2" /> اكتشف المزيد
+          </div>
         </div>
       </div>
     </div>
