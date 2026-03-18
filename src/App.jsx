@@ -152,13 +152,13 @@ const NameDetailModal = ({ nameData, onClose }) => {
               <Sparkles className="w-3 h-3 ml-2 text-amber-400" />
               {nameData.gender}
             </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-sans font-bold mb-4 sm:mb-6 text-amber-50 leading-tight drop-shadow-lg">{nameData.name}</h2>
+            <h2 className="text-2xl sm:text-3xl font-sans font-bold mb-4 sm:mb-6 text-amber-50 leading-tight drop-shadow-lg">{nameData.name}</h2>
             <p className="hidden md:block text-lg sm:text-xl text-stone-300 font-serif leading-relaxed">
               <FormattedText text={nameData.meaning} />
             </p>
           </div>
           <div className="relative z-10 mt-12 md:mt-0 opacity-[0.03] pointer-events-none">
-            <div className="text-[4rem] sm:text-[6rem] md:text-[8rem] leading-none font-sans font-bold text-white absolute -bottom-16 -left-8 select-none whitespace-nowrap truncate max-w-[150%]">
+            <div className="text-[3rem] sm:text-[4rem] md:text-[5rem] leading-none font-sans font-bold text-white absolute -bottom-8 -left-4 select-none whitespace-nowrap truncate max-w-[150%]">
               {nameData.name}
             </div>
           </div>
