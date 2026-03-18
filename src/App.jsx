@@ -168,7 +168,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
           {(nameData.meaning || nameData.definition) && (
             <section>
               <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-2.5 sm:mb-3 uppercase">
-                <BookOpen className="w-4 h-4 ml-2" /> المعنى والوصف
+                <BookOpen className="w-4 h-4 ml-2" /> المعنى 
               </h3>
               
               <div className="flex flex-col gap-2.5">
