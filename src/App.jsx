@@ -4,7 +4,7 @@ import { Search, X, Sparkles, Users, BookOpen, Feather, SlidersHorizontal, Star,
 // --- GOOGLE APPS SCRIPT INTEGRATION ---
 // IMPORTANT: Make sure this URL is from your newest deployment version!
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS4Ze823Sw7FMduPkhvPbv-ckQEPPWHiG6lcL3eHxF8rExpWNZyHZ6_8bNcOflM4pvIQ/exec';
-const CACHE_KEY = 'arabic_names_cache_v14'; // Bumped to v14 for a forced hard reset
+const CACHE_KEY = 'arabic_names_cache_v15'; // Bumped to v15 to force a refresh for the new sorting
 
 // --- EMAIL CONTACT COMPONENT ---
 const EmailContact = () => {
@@ -546,7 +546,7 @@ export default function App() {
   const filteredNames = useMemo(() => {
     const cleanSearchTerm = cleanArabicText(searchTerm);
 
-    return names.filter(name => {
+    const filtered = names.filter(name => {
       const cleanName = cleanArabicText(name.name);
       const cleanMeaning = cleanArabicText(name.meaning);
       
@@ -572,6 +572,10 @@ export default function App() {
       
       return matchesSearch && matchesGender && matchesLetter;
     });
+
+    // ✨ SORTING LOGIC APPLIED HERE ✨
+    return filtered.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+
   }, [searchTerm, genderFilter, selectedLetter, names]);
 
   useEffect(() => {
@@ -651,7 +655,7 @@ export default function App() {
 
             <div className="w-full lg:w-auto flex flex-col sm:flex-row items-center gap-2 sm:gap-3 px-1 sm:px-2">
               <div className="flex bg-stone-100 p-1 rounded-xl w-full sm:w-auto">
-                {['الكل', 'ذكور', 'إناث', 'مشترك'].map(gender => (
+                {['الكل', 'مشترك', 'إناث', 'ذكور'].map(gender => (
                   <button
                     key={gender}
                     onClick={() => setGenderFilter(gender)}
