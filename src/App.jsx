@@ -655,7 +655,7 @@ export default function App() {
 
             <div className="w-full lg:w-auto flex flex-col sm:flex-row items-center gap-2 sm:gap-3 px-1 sm:px-2">
               <div className="flex bg-stone-100 p-1 rounded-xl w-full sm:w-auto">
-                {['الكل', 'مشترك', 'إناث', 'ذكور'].map(gender => (
+                {['الكل', 'ذكور', 'إناث', 'مشترك'].map(gender => (
                   <button
                     key={gender}
                     onClick={() => setGenderFilter(gender)}
