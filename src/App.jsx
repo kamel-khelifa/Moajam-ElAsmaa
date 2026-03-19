@@ -1,8 +1,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, X, Sparkles, Users, BookOpen, Feather, SlidersHorizontal, Star, Loader2, ExternalLink, LayoutGrid, List, Grid, FileText } from 'lucide-react';
+import { Search, X, Sparkles, Users, BookOpen, Feather, SlidersHorizontal, Star, Loader2, ExternalLink, LayoutGrid, List, Grid, FileText, RefreshCw } from 'lucide-react';
 
 // --- GOOGLE APPS SCRIPT INTEGRATION ---
+// IMPORTANT: Make sure this URL is from your newest deployment version!
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS4Ze823Sw7FMduPkhvPbv-ckQEPPWHiG6lcL3eHxF8rExpWNZyHZ6_8bNcOflM4pvIQ/exec';
+const CACHE_KEY = 'arabic_names_cache_v14'; // Bumped to v14 for a forced hard reset
 
 // --- EMAIL CONTACT COMPONENT ---
 const EmailContact = () => {
@@ -153,7 +155,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
               {nameData.gender}
             </span>
             <h2 className="text-2xl sm:text-3xl font-sans font-bold mb-4 sm:mb-6 text-amber-50 leading-tight drop-shadow-lg">{nameData.name}</h2>
-            <p className="hidden md:block text-lg sm:text-xl text-stone-300 font-serif leading-relaxed">
+            <p className="hidden md:block text-lg sm:text-xl text-stone-300 font-serif leading-relaxed whitespace-pre-line">
               <FormattedText text={nameData.meaning} />
             </p>
           </div>
@@ -168,18 +170,18 @@ const NameDetailModal = ({ nameData, onClose }) => {
           {(nameData.meaning || nameData.definition) && (
             <section>
               <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-2.5 sm:mb-3 uppercase">
-                <BookOpen className="w-4 h-4 ml-2" /> المعنى 
+                <BookOpen className="w-4 h-4 ml-2" /> المعنى
               </h3>
               
               <div className="flex flex-col gap-2.5">
                 {nameData.meaning && (
-                  <p className="block md:hidden text-lg sm:text-xl text-stone-900 font-bold leading-relaxed font-serif">
+                  <p className="block md:hidden text-lg sm:text-xl text-stone-900 font-bold leading-relaxed font-serif whitespace-pre-line">
                     <FormattedText text={nameData.meaning} />
                   </p>
                 )}
                 
                 {nameData.definition && (
-                  <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
+                  <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif whitespace-pre-line">
                     <FormattedText text={nameData.definition} />
                   </p>
                 )}
@@ -196,7 +198,7 @@ const NameDetailModal = ({ nameData, onClose }) => {
                 <h3 className="flex items-center text-xs font-bold tracking-widest text-amber-700/70 mb-2.5 sm:mb-3 uppercase">
                   <FileText className="w-4 h-4 ml-2" /> الوصف والمغزى
                 </h3>
-                <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif">
+                <p className="text-base sm:text-lg md:text-xl text-stone-800 leading-relaxed font-serif whitespace-pre-line">
                   <FormattedText text={nameData.description} />
                 </p>
               </section>
@@ -285,7 +287,6 @@ const NameDetailModal = ({ nameData, onClose }) => {
 };
 
 const NameCard = ({ data, onClick, viewMode }) => {
-  // --- LIST VIEW ---
   if (viewMode === 'list') {
     return (
       <div
@@ -300,7 +301,11 @@ const NameCard = ({ data, onClick, viewMode }) => {
           
           <div className="flex-1 sm:hidden flex flex-wrap items-center gap-2">
             <h3 className="text-base font-bold font-sans text-stone-900 group-hover:text-amber-700 transition-colors break-words">{data.name}</h3>
-            <span className={`text-[10px] font-bold px-2 py-1 rounded-sm shadow-sm ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600' : data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
+            <span className={`text-[10px] font-bold px-2 py-1 rounded-sm shadow-sm 
+              ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600' : 
+                data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 
+                data.gender === 'مشترك' ? 'bg-purple-50 text-purple-600' : 
+                'bg-emerald-50 text-emerald-600'}`}>
               {data.gender || 'غير محدد'}
             </span>
           </div>
@@ -309,13 +314,17 @@ const NameCard = ({ data, onClick, viewMode }) => {
         <div className="flex-1 flex flex-col min-w-0 w-full py-1">
           <div className="hidden sm:flex flex-wrap items-center gap-3 mb-2">
             <h3 className="text-lg md:text-xl font-bold font-sans text-stone-900 group-hover:text-amber-700 transition-colors break-words">{data.name}</h3>
-            <span className={`text-[10px] font-bold px-2 py-1 rounded-sm shadow-sm ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600' : data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
+            <span className={`text-[10px] font-bold px-2 py-1 rounded-sm shadow-sm 
+              ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600' : 
+                data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 
+                data.gender === 'مشترك' ? 'bg-purple-50 text-purple-600' : 
+                'bg-emerald-50 text-emerald-600'}`}>
               {data.gender || 'غير محدد'}
             </span>
           </div>
           
           {data.meaning && (
-            <p className="text-sm sm:text-base font-bold text-stone-800 mb-1 leading-relaxed font-serif">
+            <p className="text-sm sm:text-base font-bold text-stone-800 mb-1 leading-relaxed font-serif line-clamp-1">
               {removeReferences(data.meaning)}
             </p>
           )}
@@ -334,7 +343,6 @@ const NameCard = ({ data, onClick, viewMode }) => {
     );
   }
 
-  // --- COMPACT VIEW ---
   if (viewMode === 'compact') {
     return (
       <div
@@ -350,6 +358,7 @@ const NameCard = ({ data, onClick, viewMode }) => {
             <span className={`text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 mb-1.5 sm:mb-2 rounded-md pointer-events-auto shadow-sm
               ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600 border border-rose-100' :
                 data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600 border border-blue-100' :
+                data.gender === 'مشترك' ? 'bg-purple-50 text-purple-600 border border-purple-100' :
                 'bg-emerald-50 text-emerald-600 border border-emerald-100'}`}>
               {data.gender || 'غير محدد'}
             </span>
@@ -369,7 +378,6 @@ const NameCard = ({ data, onClick, viewMode }) => {
     );
   }
 
-  // --- GRID VIEW (DEFAULT) ---
   return (
     <div
       onClick={() => onClick(data)}
@@ -386,6 +394,7 @@ const NameCard = ({ data, onClick, viewMode }) => {
               <span className={`text-[9px] sm:text-[10px] font-bold px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-md pointer-events-auto shadow-sm
                 ${data.gender === 'أنثى' ? 'bg-rose-50 text-rose-600 border border-rose-100' :
                   data.gender === 'ذكر' ? 'bg-blue-50 text-blue-600 border border-blue-100' :
+                  data.gender === 'مشترك' ? 'bg-purple-50 text-purple-600 border border-purple-100' :
                   'bg-emerald-50 text-emerald-600 border border-emerald-100'}`}>
                 {data.gender || 'غير محدد'}
               </span>
@@ -440,24 +449,80 @@ export default function App() {
       .trim();                       
   };
 
+  const clearCacheAndReload = () => {
+    localStorage.removeItem(CACHE_KEY);
+    window.location.reload();
+  };
+
   useEffect(() => {
+    const processData = (rawData) => {
+      let finalData = [];
+
+      const normalizeGender = (g, id, fallback) => {
+        const cleanG = String(g || '').replace(/[\u064B-\u065F\u0670\s]/g, '');
+        const idStr = String(id || '');
+        const fallbackStr = String(fallback || '');
+
+        if (cleanG.includes('شترك') || cleanG.includes('جنسين') || cleanG === 'الكل') return 'مشترك';
+        if (cleanG.includes('نثى') || cleanG.includes('انثي') || cleanG.includes('بنت')) return 'أنثى';
+        if (cleanG.includes('ذكر') || cleanG.includes('ولد') || cleanG.includes('دكر')) return 'ذكر';
+
+        if (idStr.includes('mix')) return 'مشترك';
+        if (idStr.includes('male')) return 'ذكر';
+        if (idStr.includes('female')) return 'أنثى';
+
+        if (fallbackStr === 'الكل') return 'مشترك';
+        if (fallbackStr === 'إناث') return 'أنثى';
+        if (fallbackStr === 'ذكور') return 'ذكر';
+
+        return 'غير محدد';
+      };
+
+      if (Array.isArray(rawData)) {
+        rawData.forEach(item => {
+          if (!item || !item.name) return;
+          finalData.push({
+            ...item,
+            name: String(item.name).trim(),
+            gender: normalizeGender(item.gender, item.id, item.genderFilter),
+            rawGenderFilter: String(item.genderFilter || '').trim() 
+          });
+        });
+      }
+      
+      return finalData;
+    };
+
     const fetchData = async () => {
       if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
         setLoading(false);
         return;
       }
 
-      const cachedData = localStorage.getItem('arabic_names_cache_v2');
+      const cachedData = localStorage.getItem(CACHE_KEY);
       if (cachedData) {
-        setNames(JSON.parse(cachedData));
-        setLoading(false);
+        try {
+          setNames(processData(JSON.parse(cachedData)));
+          setLoading(false);
+        } catch(e) {
+          console.error("Cache parsing error", e);
+        }
       }
 
       try {
         const response = await fetch(APPS_SCRIPT_URL);
         const data = await response.json();
-        setNames(data);
-        localStorage.setItem('arabic_names_cache_v2', JSON.stringify(data));
+        const processedData = processData(data);
+        
+        // Debugging logs to help you see exactly what the Google Sheet returned!
+        console.log("=== API DATA FETCHED SUCCESSFULY ===");
+        console.log(`Total Names Fetched: ${processedData.length}`);
+        console.log(`Male Names: ${processedData.filter(n => n.gender === 'ذكر').length}`);
+        console.log(`Female Names: ${processedData.filter(n => n.gender === 'أنثى').length}`);
+        console.log(`MIX NAMES: ${processedData.filter(n => n.gender === 'مشترك').length}`);
+        
+        setNames(processedData);
+        localStorage.setItem(CACHE_KEY, JSON.stringify(data)); 
       } catch (error) {
         console.error('Error fetching from Apps Script:', error);
       } finally {
@@ -490,8 +555,14 @@ export default function App() {
                             (name.famousPeople && name.famousPeople.some(p => cleanArabicText(p).includes(cleanSearchTerm))) ||
                             (name.tags && name.tags.some(tag => cleanArabicText(tag).includes(cleanSearchTerm)));
                             
-      const matchesGender = genderFilter === 'الكل' ? true :
-                            (name.genderFilter === genderFilter || name.genderFilter === 'الكل');
+      let matchesGender = true;
+      if (genderFilter === 'إناث') {
+        matchesGender = name.gender === 'أنثى' || name.rawGenderFilter === 'إناث';
+      } else if (genderFilter === 'ذكور') {
+        matchesGender = name.gender === 'ذكر' || name.rawGenderFilter === 'ذكور';
+      } else if (genderFilter === 'مشترك') {
+        matchesGender = name.gender === 'مشترك' || name.rawGenderFilter === 'الكل' || name.gender === 'الكل';
+      }
       
       let matchesLetter = true;
       if (selectedLetter !== 'الكل') {
@@ -531,7 +602,7 @@ export default function App() {
       {/* Navbar */}
       <nav className="w-full bg-white/80 backdrop-blur-xl z-40 border-b border-stone-200/50 shadow-sm sticky top-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2 cursor-pointer group">
+          <div className="flex items-center gap-2 cursor-pointer group" onClick={clearCacheAndReload} title="انقر لتحديث البيانات">
             <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-md shadow-amber-900/20 group-hover:rotate-12 transition-transform">
               <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
             </div>
@@ -540,7 +611,7 @@ export default function App() {
           <div className="hidden sm:flex items-center gap-6 lg:gap-8 text-sm font-bold text-stone-500">
             <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="text-amber-700 transition-colors">تصفح الأسماء</button>
             <button onClick={() => setActiveStaticPage(staticPagesContent.about)} className="hover:text-stone-900 transition-colors">عن المعجم</button>
-            <button onClick={() => setActiveStaticPage(staticPagesContent.contact)} className="hover:text-stone-900 transition-colors">تواصل معنا</button>
+            <button onClick={() => setActiveStaticPage(staticPagesContent.contact)} className="hover:text-amber-700 transition-colors">تواصل معنا</button>
           </div>
         </div>
       </nav>
@@ -580,11 +651,11 @@ export default function App() {
 
             <div className="w-full lg:w-auto flex flex-col sm:flex-row items-center gap-2 sm:gap-3 px-1 sm:px-2">
               <div className="flex bg-stone-100 p-1 rounded-xl w-full sm:w-auto">
-                {['الكل', 'إناث', 'ذكور'].map(gender => (
+                {['الكل', 'ذكور', 'إناث', 'مشترك'].map(gender => (
                   <button
                     key={gender}
                     onClick={() => setGenderFilter(gender)}
-                    className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-xs sm:text-sm font-bold transition-all ${
+                    className={`flex-1 sm:flex-none px-3 sm:px-4 py-2 sm:py-3 rounded-lg text-xs sm:text-sm font-bold transition-all ${
                       genderFilter === gender
                         ? 'bg-white text-amber-700 shadow-sm border border-stone-200/50'
                         : 'text-stone-500 hover:text-stone-900'
@@ -650,12 +721,22 @@ export default function App() {
           </div>
 
           <div className="max-w-7xl mx-auto mt-8 sm:mt-12 mb-4 sm:mb-6 flex justify-between items-end border-b border-stone-200/60 pb-3 sm:pb-4">
-            <h2 className="text-xl sm:text-2xl font-kufi font-bold text-stone-800">
-              {searchTerm ? 'نتائج البحث' : 'قائمة الأسماء'}
-            </h2>
-            <span className="text-xs sm:text-sm font-bold text-stone-500 bg-stone-100 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full shadow-inner border border-stone-200/50">
-              {loading ? '...' : filteredNames.length} {filteredNames.length === 1 ? 'اسم' : 'أسماء'}
-            </span>
+            <div className="flex items-center gap-4">
+              <h2 className="text-xl sm:text-2xl font-kufi font-bold text-stone-800">
+                {searchTerm ? 'نتائج البحث' : 'قائمة الأسماء'}
+              </h2>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              {!loading && names.length > 0 && names.filter(n => n.gender === 'مشترك').length === 0 && (
+                <span className="text-xs font-bold text-red-600 bg-red-50 px-3 py-1.5 rounded-full border border-red-200">
+                  ⚠️ لم يتم جلب الأسماء المشتركة من جوجل شيت
+                </span>
+              )}
+              <span className="text-xs sm:text-sm font-bold text-stone-500 bg-stone-100 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full shadow-inner border border-stone-200/50">
+                {loading ? '...' : filteredNames.length} {filteredNames.length === 1 ? 'اسم' : 'أسماء'}
+              </span>
+            </div>
           </div>
 
           {loading ? (
@@ -670,9 +751,9 @@ export default function App() {
                 viewMode === 'compact' ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-4 max-w-7xl mx-auto" :
                 "flex flex-col gap-3 sm:gap-4 max-w-5xl mx-auto"
               }>
-                {displayedNames.map(name => (
+                {displayedNames.map((name, index) => (
                   <NameCard
-                    key={name.id}
+                    key={name.id || `${name.name}-${name.gender}-${index}`}
                     data={name}
                     onClick={setSelectedName}
                     viewMode={viewMode}
@@ -693,12 +774,21 @@ export default function App() {
               </div>
               <h3 className="text-2xl sm:text-3xl font-kufi font-bold text-stone-900 mb-2 sm:mb-3">لم يتم العثور على أسماء</h3>
               <p className="text-xs sm:text-sm text-stone-500 font-sans">حاول تعديل كلمات البحث أو تغيير تصنيف الجنس.</p>
-              <button
-                onClick={() => {setSearchTerm(''); setGenderFilter('الكل');}}
-                className="mt-6 sm:mt-8 px-6 sm:px-8 py-2.5 sm:py-3 bg-stone-900 text-white rounded-full text-xs sm:text-sm font-bold tracking-wide hover:bg-amber-700 shadow-lg shadow-amber-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
-              >
-                مسح فلاتر البحث
-              </button>
+              
+              <div className="flex justify-center gap-3 mt-6 sm:mt-8">
+                <button
+                  onClick={() => {setSearchTerm(''); setGenderFilter('الكل');}}
+                  className="px-6 sm:px-8 py-2.5 sm:py-3 bg-stone-900 text-white rounded-full text-xs sm:text-sm font-bold tracking-wide hover:bg-amber-700 shadow-lg shadow-amber-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                >
+                  مسح فلاتر البحث
+                </button>
+                <button
+                  onClick={clearCacheAndReload}
+                  className="px-6 sm:px-8 py-2.5 sm:py-3 bg-white text-stone-600 border border-stone-200 rounded-full text-xs sm:text-sm font-bold tracking-wide hover:bg-stone-50 hover:text-stone-900 transition-all flex items-center gap-2"
+                >
+                  <RefreshCw className="w-4 h-4" /> تحديث البيانات
+                </button>
+              </div>
             </div>
           )}
 
